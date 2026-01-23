@@ -20,6 +20,43 @@ class Task {
         return (isDone ? "[X] " : "[ ] ") + description;
     }
 }
+
+class Todo extends Task {
+    public Todo(String description) {
+        super(description);
+    }
+    @Override
+    public String toString() {
+        return "[T]" + super.toString();
+    }
+}
+
+class Deadline extends Task {
+    String by;
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+    }
+    @Override
+    public String toString() {
+        return "[D]" + super.toString() + " (by: " + by + ")";
+    }
+}
+
+class Event extends Task {
+    String from;
+    String to;
+    public Event(String description, String from, String to) {
+        super(description);
+        this.from = from;
+        this.to = to;
+    }
+    @Override
+    public String toString() {
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+    }
+}
+
 public class Misaka19090 {
     public static void main(String[] args) {
 
@@ -65,11 +102,23 @@ public class Misaka19090 {
                 continue;
             }
 
-            tasks[taskCount] = new Task(input);
-            taskCount++;
+            if (input.startsWith("todo ")) {
+                tasks[taskCount] = new Todo(input.substring(5));
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ");
+                tasks[taskCount] = new Deadline(parts[0], parts[1]);
+            } else if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ");
+                tasks[taskCount] = new Event(parts[0], parts[1], parts[2]);
+            } else {
+                tasks[taskCount] = new Task(input);
+            }
 
             System.out.println("____________________________________________________________");
-            System.out.println("added: " + input);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(" " + tasks[taskCount].toString());
+            taskCount++;
+            System.out.println("Now you have " + taskCount + " tasks in the list.");
             System.out.println("____________________________________________________________");
         }
     }
