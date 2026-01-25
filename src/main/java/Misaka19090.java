@@ -86,26 +86,33 @@ public class Misaka19090 {
                 break;
             }
             if (input.equals("list")) {
+                System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.println((i + 1) + "." + tasks.get(i));
                 }
+                System.out.println("____________________________________________________________");
                 continue;
             }
 
             if (input.startsWith("mark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
                 tasks.get(idx).mark();
+
+                System.out.println("____________________________________________________________");
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(" " + tasks.get(idx));
+                System.out.println("____________________________________________________________");
                 continue;
             }
 
             if (input.startsWith("unmark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
                 tasks.get(idx).unmark();
+                System.out.println("____________________________________________________________");
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(" " + tasks.get(idx));
+                System.out.println("____________________________________________________________");
                 continue;
             }
 
