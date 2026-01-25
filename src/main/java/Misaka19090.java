@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+
 class Task {
     String description;
     boolean isDone;
@@ -67,8 +69,7 @@ public class Misaka19090 {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm Misaka19090");
@@ -86,25 +87,25 @@ public class Misaka19090 {
             }
             if (input.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println((i + 1) + "." + tasks[i]);
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println((i + 1) + "." + tasks.get(i));
                 }
                 continue;
             }
 
             if (input.startsWith("mark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                tasks[idx].mark();
+                tasks.get(idx).mark();
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(" " + tasks[idx]);
+                System.out.println(" " + tasks.get(idx));
                 continue;
             }
 
             if (input.startsWith("unmark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                tasks[idx].unmark();
+                tasks.get(idx).unmark();
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(" " + tasks[idx]);
+                System.out.println(" " + tasks.get(idx));
                 continue;
             }
 
@@ -115,7 +116,7 @@ public class Misaka19090 {
                 }
 
                 if (input.startsWith("todo ")) {
-                    tasks[taskCount] = new Todo(input.substring(5));
+                    tasks.add(new Todo(input.substring(5)));
 
                 } else if (input.equals("deadline")) {
                     printError("Oops! The description of a deadline cannot be empty.");
@@ -127,7 +128,7 @@ public class Misaka19090 {
                         printError("Oops! Deadlines must have a /by date.");
                         continue;
                     }
-                    tasks[taskCount] = new Deadline(parts[0], parts[1]);
+                    tasks.add(new Deadline(parts[0], parts[1]));
 
                 } else if (input.equals("event")) {
                     printError("Oops! The description of an event cannot be empty.");
@@ -139,8 +140,18 @@ public class Misaka19090 {
                         printError("Oops! Events must have /from and /to.");
                         continue;
                     }
-                    tasks[taskCount] = new Event(parts[0], parts[1], parts[2]);
+                    tasks.add(new Event(parts[0], parts[1], parts[2]));
 
+                } else if (input.startsWith("delete ")) {
+                    int idx = Integer.parseInt(input.split(" ")[1]) - 1;
+                    Task removed = tasks.remove(idx);
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + removed);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("____________________________________________________________");
+                    continue;
                 } else {
                     printError("Oops! I'm sorry, but I don't know what that means :-(");
                     continue;
@@ -148,9 +159,8 @@ public class Misaka19090 {
 
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
-                System.out.println("  " + tasks[taskCount].toString());
-                taskCount++;
-                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                System.out.println("  " + tasks.get(tasks.size() - 1));
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
 
             } catch (Exception e) {
