@@ -58,6 +58,12 @@ class Event extends Task {
 }
 
 public class Misaka19090 {
+    static void printError(String message) {
+        System.out.println("____________________________________________________________");
+        System.out.println(message);
+        System.out.println("____________________________________________________________");
+    }
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -102,24 +108,55 @@ public class Misaka19090 {
                 continue;
             }
 
-            if (input.startsWith("todo ")) {
-                tasks[taskCount] = new Todo(input.substring(5));
-            } else if (input.startsWith("deadline ")) {
-                String[] parts = input.substring(9).split(" /by ");
-                tasks[taskCount] = new Deadline(parts[0], parts[1]);
-            } else if (input.startsWith("event ")) {
-                String[] parts = input.substring(6).split(" /from | /to ");
-                tasks[taskCount] = new Event(parts[0], parts[1], parts[2]);
-            } else {
-                tasks[taskCount] = new Task(input);
+            try {
+                if (input.equals("todo")) {
+                    printError("Oops! The description of a todo cannot be empty.");
+                    continue;
+                }
+
+                if (input.startsWith("todo ")) {
+                    tasks[taskCount] = new Todo(input.substring(5));
+
+                } else if (input.equals("deadline")) {
+                    printError("Oops! The description of a deadline cannot be empty.");
+                    continue;
+
+                } else if (input.startsWith("deadline ")) {
+                    String[] parts = input.substring(9).split(" /by ");
+                    if (parts.length < 2) {
+                        printError("Oops! Deadlines must have a /by date.");
+                        continue;
+                    }
+                    tasks[taskCount] = new Deadline(parts[0], parts[1]);
+
+                } else if (input.equals("event")) {
+                    printError("Oops! The description of an event cannot be empty.");
+                    continue;
+
+                } else if (input.startsWith("event ")) {
+                    String[] parts = input.substring(6).split(" /from | /to ");
+                    if (parts.length < 3) {
+                        printError("Oops! Events must have /from and /to.");
+                        continue;
+                    }
+                    tasks[taskCount] = new Event(parts[0], parts[1], parts[2]);
+
+                } else {
+                    printError("Oops! I'm sorry, but I don't know what that means :-(");
+                    continue;
+                }
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks[taskCount].toString());
+                taskCount++;
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+
+            } catch (Exception e) {
+                printError("Something went wrong. Please check your command format.");
             }
 
-            System.out.println("____________________________________________________________");
-            System.out.println("Got it. I've added this task:");
-            System.out.println(" " + tasks[taskCount].toString());
-            taskCount++;
-            System.out.println("Now you have " + taskCount + " tasks in the list.");
-            System.out.println("____________________________________________________________");
         }
     }
 }
