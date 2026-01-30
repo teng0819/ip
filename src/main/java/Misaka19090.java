@@ -1,5 +1,11 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 class Task {
     String description;
@@ -66,10 +72,62 @@ public class Misaka19090 {
         System.out.println("____________________________________________________________");
     }
 
+    private static final String FILE_PATH = "./data/misaka.txt";
+
+    // Save tasks to disk
+    public static void saveTasks(ArrayList<Task> tasks) {
+        try {
+            File folder = new File("./data");
+            if (!folder.exists()) folder.mkdir();
+
+            FileWriter fw = new FileWriter(FILE_PATH);
+            for (Task t : tasks) {
+                String type = t instanceof Todo ? "T" : t instanceof Deadline ? "D" : "E";
+                int done = t.isDone ? 1 : 0;
+                String line = type + " | " + done + " | " + t.description;
+                if (t instanceof Deadline) line += " | " + ((Deadline) t).by;
+                if (t instanceof Event) line += " | " + ((Event) t).from + " | " + ((Event) t).to;
+                fw.write(line + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks: " + e.getMessage());
+        }
+    }
+
+    // Load tasks from disk
+    public static ArrayList<Task> loadTasks() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        File file = new File(FILE_PATH);
+        if (!file.exists()) return tasks;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" \\| ");
+                String type = parts[0];
+                boolean isDone = parts[1].equals("1");
+                String description = parts[2];
+                Task t;
+                if (type.equals("T")) t = new Todo(description);
+                else if (type.equals("D")) t = new Deadline(description, parts[3]);
+                else t = new Event(description, parts[3], parts[4]);
+
+                if (isDone) t.mark();
+                tasks.add(t);
+            }
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+        }
+        return tasks;
+    }
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = loadTasks();
 
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm Misaka19090");
@@ -98,6 +156,7 @@ public class Misaka19090 {
             if (input.startsWith("mark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
                 tasks.get(idx).mark();
+                saveTasks(tasks);
 
                 System.out.println("____________________________________________________________");
                 System.out.println("Nice! I've marked this task as done:");
@@ -109,6 +168,7 @@ public class Misaka19090 {
             if (input.startsWith("unmark ")) {
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
                 tasks.get(idx).unmark();
+                saveTasks(tasks);
                 System.out.println("____________________________________________________________");
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println(" " + tasks.get(idx));
@@ -124,6 +184,7 @@ public class Misaka19090 {
 
                 if (input.startsWith("todo ")) {
                     tasks.add(new Todo(input.substring(5)));
+                    saveTasks(tasks);
 
                 } else if (input.equals("deadline")) {
                     printError("Oops! The description of a deadline cannot be empty.");
@@ -136,6 +197,7 @@ public class Misaka19090 {
                         continue;
                     }
                     tasks.add(new Deadline(parts[0], parts[1]));
+                    saveTasks(tasks);
 
                 } else if (input.equals("event")) {
                     printError("Oops! The description of an event cannot be empty.");
@@ -148,10 +210,12 @@ public class Misaka19090 {
                         continue;
                     }
                     tasks.add(new Event(parts[0], parts[1], parts[2]));
+                    saveTasks(tasks);
 
                 } else if (input.startsWith("delete ")) {
                     int idx = Integer.parseInt(input.split(" ")[1]) - 1;
                     Task removed = tasks.remove(idx);
+                    saveTasks(tasks);
 
                     System.out.println("____________________________________________________________");
                     System.out.println("Noted. I've removed this task:");
