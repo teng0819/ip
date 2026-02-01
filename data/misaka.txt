@@ -1,2 +1,2 @@
-D | 0 | submit report | Sunday
 E | 0 | meeting | Mon 2pm | 4pm
+D | 0 | return book | 2019-10-15
