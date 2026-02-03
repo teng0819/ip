@@ -1,3 +1,5 @@
+package misaka;
+
 public class Misaka19090 {
 
     private Ui ui;
