@@ -3,7 +3,7 @@ package misaka;
 import java.util.Scanner;
 
 public class Ui {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void showWelcome() {
         showLine();

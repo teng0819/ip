@@ -1,79 +1,98 @@
 package misaka;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Parser {
+
+    private static final String COMMAND_BYE = "bye";
+    private static final String COMMAND_LIST = "list";
+
+    private Parser() {
+        // Prevent instantiation
+    }
 
     public static String parse(String input, TaskList tasks, Storage storage)
             throws DukeException {
 
-        if (input.equals("bye")) {
+        if (input.equals(COMMAND_BYE)) {
             return "Bye. Hope to see you again soon!";
         }
 
-        if (input.equals("list")) {
+        if (input.equals(COMMAND_LIST)) {
             return listTasks(tasks);
         }
 
         if (input.startsWith("todo ")) {
-            Task t = new Todo(input.substring(5));
-            tasks.add(t);
+            Task task = new Todo(input.substring(5));
+            tasks.add(task);
             storage.save(tasks);
-            return "Got it. I've added this task:\n  " + t;
+            return "Got it. I've added this task:\n  " + task;
         }
 
         if (input.startsWith("deadline ")) {
             String[] parts = input.substring(9).split(" /by ");
+            if (parts.length != 2) {
+                throw new DukeException("Deadline format: deadline <task> /by <date>");
+            }
+
             LocalDate date = LocalDate.parse(parts[1]);
-            Task t = new Deadline(parts[0], date);
-            tasks.add(t);
+            Task task = new Deadline(parts[0], date);
+            tasks.add(task);
             storage.save(tasks);
-            return "Got it. I've added this task:\n  " + t;
+            return "Got it. I've added this task:\n  " + task;
         }
 
         if (input.startsWith("event ")) {
             String[] parts = input.substring(6).split(" /from | /to ");
-            Task t = new Event(parts[0], parts[1], parts[2]);
-            tasks.add(t);
+            if (parts.length != 3) {
+                throw new DukeException("Event format: event <task> /from <start> /to <end>");
+            }
+
+            Task task = new Event(parts[0], parts[1], parts[2]);
+            tasks.add(task);
             storage.save(tasks);
-            return "Got it. I've added this task:\n  " + t;
+            return "Got it. I've added this task:\n  " + task;
         }
 
         throw new DukeException("I don't understand this command.");
     }
 
-    public static Task parseTaskFromFile(String line) {
+    public static Task parseTaskFromFile(String line) throws DukeException {
         String[] parts = line.split(" \\| ");
-        boolean done = parts[1].equals("1");
+        boolean isDone = parts[1].equals("1");
 
-        if (parts[0].equals("T")) {
-            Task t = new Todo(parts[2]);
-            t.setDone(done);
-            return t;
+        switch (parts[0]) {
+            case "T": {
+                Task task = new Todo(parts[2]);
+                task.setDone(isDone);
+                return task;
+            }
+            case "D": {
+                LocalDate date = LocalDate.parse(parts[3]);
+                Task task = new Deadline(parts[2], date);
+                task.setDone(isDone);
+                return task;
+            }
+            case "E": {
+                Task task = new Event(parts[2], parts[3], parts[4]);
+                task.setDone(isDone);
+                return task;
+            }
+            default:
+                throw new DukeException("Unknown task type in file.");
         }
-
-        if (parts[0].equals("D")) {
-            LocalDate date = LocalDate.parse(parts[3]);
-            Task t = new Deadline(parts[2], date);
-            t.setDone(done);
-            return t;
-        }
-
-        if (parts[0].equals("E")) {
-            Task t = new Event(parts[2], parts[3], parts[4]);
-            t.setDone(done);
-            return t;
-        }
-
-        return null;
     }
 
     private static String listTasks(TaskList tasks) {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        StringBuilder message = new StringBuilder("Here are the tasks in your list:\n");
+
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append(i + 1).append(".").append(tasks.get(i)).append("\n");
+            message.append(i + 1)
+                    .append(". ")
+                    .append(tasks.get(i))
+                    .append("\n");
         }
-        return sb.toString();
+
+        return message.toString();
     }
 }

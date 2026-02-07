@@ -6,10 +6,12 @@ public class Todo extends Task {
         super(description);
     }
 
+    @Override
     public String toString() {
         return "[T][" + statusIcon() + "] " + description;
     }
 
+    @Override
     public String toFileString() {
         return "T | " + (isDone ? 1 : 0) + " | " + description;
     }
