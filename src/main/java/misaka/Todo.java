@@ -3,7 +3,6 @@ package misaka;
 /**
  * Represents a task without a specific date or time.
  */
-
 public class Todo extends Task {
 
     /**
@@ -16,10 +15,11 @@ public class Todo extends Task {
     }
 
     /**
-     * Returns the string representaiton of the todo task
+     * Returns the string representation of the todo task.
      *
      * @return Formatted todo task string
      */
+    @Override
     public String toString() {
         return "[T][" + statusIcon() + "] " + description;
     }
@@ -29,6 +29,7 @@ public class Todo extends Task {
      *
      * @return File-format string of the todo task
      */
+    @Override
     public String toFileString() {
         return "T | " + (isDone ? 1 : 0) + " | " + description;
     }

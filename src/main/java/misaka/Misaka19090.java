@@ -6,8 +6,8 @@ package misaka;
  */
 public class Misaka19090 {
 
-    private Ui ui;
-    private Storage storage;
+    private final Ui ui;
+    private final Storage storage;
     private TaskList tasks;
 
     /**

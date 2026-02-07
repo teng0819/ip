@@ -34,6 +34,15 @@ public abstract class Task {
     }
 
     /**
+     * Sets the completion status of the task.
+     *
+     * @param done true if task is completed, false otherwise
+     */
+    public void setDone(boolean done) {
+        this.isDone = done;
+    }
+
+    /**
      * Returns the status icon of the task.
      *
      * @return "X" if done, otherwise a blank space

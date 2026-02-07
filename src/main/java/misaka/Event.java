@@ -5,8 +5,8 @@ package misaka;
  */
 
 public class Event extends Task {
-    private String from;
-    private String to;
+    private final String from;
+    private final String to;
 
     /**
      * Creates an event task.

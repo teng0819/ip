@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Handles all interactions with the user, including input and output.
  */
 public class Ui {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Displays theh welcome message when the application starts.
