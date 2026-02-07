@@ -1,6 +1,7 @@
 package misaka;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Parses user input into executable commands or task objects.
@@ -66,6 +67,11 @@ public class Parser {
             return "Got it. I've added this task:\n  " + task;
         }
 
+        if (input.startsWith("find ")) {
+            String keyword = input.substring(5);
+            return findTasks(tasks, keyword);
+        }
+
         throw new DukeException("I don't understand this command.");
     }
 
@@ -120,4 +126,20 @@ public class Parser {
 
         return message.toString();
     }
+
+    private static String findTasks(TaskList tasks, String keyword) {
+        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
+
+        ArrayList<Task> matches = tasks.find(keyword);
+
+        for (int i = 0; i < matches.size(); i++) {
+            sb.append(i + 1)
+                    .append(".")
+                    .append(matches.get(i))
+                    .append("\n");
+        }
+
+        return sb.toString();
+    }
+
 }
