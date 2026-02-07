@@ -1,10 +1,21 @@
 package misaka;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
+/**
+ * Parses user input into executable commands or task objects
+ */
 public class Parser {
 
+    /**
+     * Parses a task from a line stored in the data file
+     *
+     * @param input Full command entered by the user
+     * @param tasks The task list to operate on
+     * @param storage Storage handler for saving tasks
+     * @return Response message to be shown to the user
+     * @throws DukeException If the command format is invalid
+     */
     public static String parse(String input, TaskList tasks, Storage storage)
             throws DukeException {
 
@@ -43,32 +54,59 @@ public class Parser {
         throw new DukeException("I don't understand this command.");
     }
 
+    /**
+     * Reconstructs a task object from a line stored in the data file.
+     *
+     * @param line A single line read from the task file
+     * @return The reconstructed Task object
+     */
     public static Task parseTaskFromFile(String line) {
         String[] parts = line.split(" \\| ");
         boolean done = parts[1].equals("1");
 
         if (parts[0].equals("T")) {
             Task t = new Todo(parts[2]);
-            t.setDone(done);
+            if (done) {
+                t.mark();
+            } else {
+                t.unmark();
+            }
+
             return t;
         }
 
         if (parts[0].equals("D")) {
             LocalDate date = LocalDate.parse(parts[3]);
             Task t = new Deadline(parts[2], date);
-            t.setDone(done);
+            if (done) {
+                t.mark();
+            } else {
+                t.unmark();
+            }
+
             return t;
         }
 
         if (parts[0].equals("E")) {
             Task t = new Event(parts[2], parts[3], parts[4]);
-            t.setDone(done);
+            if (done) {
+                t.mark();
+            } else {
+                t.unmark();
+            }
+
             return t;
         }
 
         return null;
     }
 
+    /**
+     * Formats all tasks into a numbered list string.
+     *
+     * @param tasks tasks Task list to display
+     * @return Formatted task list string
+     */
     private static String listTasks(TaskList tasks) {
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {

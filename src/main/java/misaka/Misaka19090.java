@@ -1,11 +1,20 @@
 package misaka;
 
+/**
+ * Main entry point for the Misaka task management application.
+ * Coordinates UI, storage, and command parsing.
+ */
 public class Misaka19090 {
 
     private Ui ui;
     private Storage storage;
     private TaskList tasks;
 
+    /**
+     * Constructs the application and loads tasks from the given file.
+     *
+     * @param filePath Path to the task storage file
+     */
     public Misaka19090(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -17,6 +26,9 @@ public class Misaka19090 {
         }
     }
 
+    /**
+     * Runs the main program loop until the user exits.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -40,6 +52,11 @@ public class Misaka19090 {
         }
     }
 
+    /**
+     * Starts the Misaka application
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
         new Misaka19090("data/misaka.txt").run();
     }
