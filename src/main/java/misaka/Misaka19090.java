@@ -53,6 +53,21 @@ public class Misaka19090 {
     }
 
     /**
+     * Processes user input and returns chatbot response (for GUI).
+     *
+     * @param input User input string
+     * @return Response string
+     */
+    public String getResponse(String input) {
+        try {
+            String response = Parser.parse(input, tasks, storage);
+            return response;
+        } catch (DukeException e) {
+            return e.getMessage();
+        }
+    }
+
+    /**
      * Starts the Misaka application
      *
      * @param args Command-line arguments

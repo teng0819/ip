@@ -62,10 +62,21 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Returns the tasks in the list
+     *
+     * @return tasks in the list
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * find whether a keyword exists in the task
+     *
+     * @param keyword the word we want to find
+     * @return the result found in the task
+     */
     public ArrayList<Task> find(String keyword) {
         ArrayList<Task> result = new ArrayList<>();
 

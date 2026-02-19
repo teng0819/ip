@@ -87,22 +87,22 @@ public class Parser {
         boolean isDone = parts[1].equals("1");
 
         switch (parts[0]) {
-            case "T": {
+            case "T":
                 Task task = new Todo(parts[2]);
                 task.setDone(isDone);
                 return task;
-            }
-            case "D": {
+
+            case "D":
                 LocalDate date = LocalDate.parse(parts[3]);
-                Task task = new Deadline(parts[2], date);
+                task = new Deadline(parts[2], date);
                 task.setDone(isDone);
                 return task;
-            }
-            case "E": {
-                Task task = new Event(parts[2], parts[3], parts[4]);
+
+            case "E":
+                task = new Event(parts[2], parts[3], parts[4]);
                 task.setDone(isDone);
                 return task;
-            }
+
             default:
                 throw new DukeException("Unknown task type in file.");
         }

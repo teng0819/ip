@@ -31,8 +31,13 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D][" + statusIcon() + "] " + description
-                + " (by: " + by.format(OUTPUT_FORMAT) + ")";
+        return "[D]["
+                + statusIcon()
+                + "] "
+                + description
+                + " (by: "
+                + by.format(OUTPUT_FORMAT)
+                + ")";
     }
 
     /**
@@ -42,6 +47,11 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return "D | " + (isDone ? 1 : 0) + " | " + description + " | " + by;
+        return "D | "
+                + (isDone ? 1 : 0)
+                + " | "
+                + description
+                + " | "
+                + by;
     }
 }

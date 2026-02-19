@@ -27,8 +27,15 @@ public class Event extends Task {
      * @return Formatted event task string
      */
     public String toString() {
-        return "[E][" + statusIcon() + "] " + description +
-                " (from: " + from + " to: " + to + ")";
+        return "[E]["
+                + statusIcon()
+                + "] "
+                + description
+                + " (from: "
+                + from
+                + " to: "
+                + to
+                + ")";
     }
 
     /**
@@ -37,6 +44,13 @@ public class Event extends Task {
      * @return File-format string of the event task
      */
     public String toFileString() {
-        return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + from + " | " + to;
+        return "E | "
+                + (isDone ? 1 : 0)
+                + " | "
+                + description
+                + " | "
+                + from
+                + " | "
+                + to;
     }
 }

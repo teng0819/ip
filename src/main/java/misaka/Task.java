@@ -52,6 +52,24 @@ public abstract class Task {
     }
 
     /**
+     * Returns the description of the task.
+     *
+     * @return the task description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Returns whether the task is done.
+     *
+     * @return true if done, false otherwise
+     */
+    public boolean isDone() {
+        return isDone;
+    }
+
+    /**
      * Converts the task into a string suitable for file storage
      *
      * @return File-format string of the task
