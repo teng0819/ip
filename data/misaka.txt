@@ -6,3 +6,4 @@ E | 0 | meeting | 2pm | 4pm
 D | 0 | return book | 2019-10-15
 T | 0 | homework
 D | 0 | project | 2026-02-20
+T | 0 | borrow book from library

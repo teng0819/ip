@@ -40,6 +40,8 @@ public class TaskList {
      * @return Task at the index
      */
     public Task get(int index) {
+        assert index >= 0 : "Index must be non-negative";
+        assert index < tasks.size() : "Index out of range";
         return tasks.get(index);
     }
 
@@ -50,6 +52,7 @@ public class TaskList {
      * @return Removed task
      */
     public Task remove(int index) {
+        assert index >= 0 && index < tasks.size() : "Index invalid for removal";
         return tasks.remove(index);
     }
 
@@ -78,6 +81,10 @@ public class TaskList {
      * @return the result found in the task
      */
     public ArrayList<Task> find(String keyword) {
+        boolean assertionsEnabled = false;
+        assert assertionsEnabled = true; // This will only execute if assertions are on
+        System.out.println("Assertions enabled: " + assertionsEnabled);
+        assert keyword != null && !keyword.isEmpty() : "Keyword must not be empty";
         ArrayList<Task> result = new ArrayList<>();
 
         for (Task task : tasks) {

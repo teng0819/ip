@@ -45,6 +45,7 @@ public class Parser {
         if (input.startsWith("deadline ")) {
             String[] parts = input.substring(9).split(" /by ");
             if (parts.length != 2) {
+                assert false : "Parts length too small for deadline or event";
                 throw new DukeException("Deadline format: deadline <task> /by <date>");
             }
 
@@ -58,6 +59,7 @@ public class Parser {
         if (input.startsWith("event ")) {
             String[] parts = input.substring(6).split(" /from | /to ");
             if (parts.length != 3) {
+                assert false : "Parts length too small for deadline or event";
                 throw new DukeException("Event format: event <task> /from <start> /to <end>");
             }
 

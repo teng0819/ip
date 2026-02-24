@@ -39,6 +39,8 @@ shadowJar {
 }
 
 run{
+    jvmArgs = ["-ea"]
+    enableAssertions = true
     standardInput = System.in
 }
 
@@ -55,13 +57,9 @@ jar {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 javafx {
     version = "17"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 dependencies {
