@@ -7,6 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Main GUI class for the Misaka task management application.
+ * Handles the JavaFX user interface and user interactions.
+ */
+
 public class Main extends Application {
 
     private Misaka19090 misaka = new Misaka19090("data/misaka.txt");
