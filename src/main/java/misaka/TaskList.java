@@ -81,9 +81,6 @@ public class TaskList {
      * @return the result found in the task
      */
     public ArrayList<Task> find(String keyword) {
-        boolean assertionsEnabled = false;
-        assert assertionsEnabled = true; // This will only execute if assertions are on
-        System.out.println("Assertions enabled: " + assertionsEnabled);
         assert keyword != null && !keyword.isEmpty() : "Keyword must not be empty";
         ArrayList<Task> result = new ArrayList<>();
 
