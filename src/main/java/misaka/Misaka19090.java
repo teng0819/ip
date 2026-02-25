@@ -1,12 +1,11 @@
 package misaka;
 
 /**
- * Main entry point for the Misaka task management application.
- * Coordinates UI, storage, and command parsing.
+ * Main logic class for the Misaka task management application.
+ * Handles storage, tasks, and parsing commands.
  */
 public class Misaka19090 {
 
-    private final Ui ui;
     private final Storage storage;
     private TaskList tasks;
 
@@ -16,39 +15,12 @@ public class Misaka19090 {
      * @param filePath Path to the task storage file
      */
     public Misaka19090(String filePath) {
-        ui = new Ui();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
         } catch (DukeException e) {
-            ui.showError("Failed to load tasks.");
+            // If loading fails, start with an empty TaskList
             tasks = new TaskList();
-        }
-    }
-
-    /**
-     * Runs the main program loop until the user exits.
-     */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-
-        while (!isExit) {
-            try {
-                String input = ui.readCommand();
-                ui.showLine();
-
-                String response = Parser.parse(input, tasks, storage);
-                ui.showMessage(response);
-
-                if (input.equals("bye")) {
-                    isExit = true;
-                }
-            } catch (DukeException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
         }
     }
 
@@ -60,19 +32,12 @@ public class Misaka19090 {
      */
     public String getResponse(String input) {
         try {
-            String response = Parser.parse(input, tasks, storage);
-            return response;
+            // Parse the input and update tasks/storage
+            return Parser.parse(input, tasks, storage);
         } catch (DukeException e) {
-            return e.getMessage();
+            // Return error message prefixed with [ERROR] for GUI display
+            return "[ERROR] " + e.getMessage();
         }
     }
 
-    /**
-     * Starts the Misaka application
-     *
-     * @param args Command-line arguments
-     */
-    public static void main(String[] args) {
-        new Misaka19090("data/misaka.txt").run();
-    }
 }

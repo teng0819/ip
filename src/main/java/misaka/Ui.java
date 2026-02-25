@@ -1,54 +1,30 @@
 package misaka;
 
-import java.util.Scanner;
-
 /**
- * Handles all interactions with the user, including input and output.
+ * Handles interactions with the user.
  */
 public class Ui {
-    private final Scanner scanner = new Scanner(System.in);
+
+    private final StringBuilder dialog = new StringBuilder();
 
     /**
-     * Displays theh welcome message when the application starts.
-     */
-    public void showWelcome() {
-        showLine();
-        System.out.println("Hello! I'm Misaka19090");
-        System.out.println("What can I do for you?");
-        showLine();
-    }
-
-    /**
-     * Reads a command from the user.
-     *
-     * @return User input string
-     */
-    public String readCommand() {
-        return scanner.nextLine();
-    }
-
-    /**
-     * Displays a normal message to the user.
-     *
-     * @param message Message to be displayed
+     * Appends a normal message.
      */
     public void showMessage(String message) {
-        System.out.println(message);
+        dialog.append(message).append("\n");
     }
 
     /**
-     * Displays an error message to the user.
-     *
-     * @param message Error message
+     * Appends an error message.
      */
     public void showError(String message) {
-        System.out.println(message);
+        dialog.append("[ERROR] ").append(message).append("\n");
     }
 
     /**
-     * Prints a horizontal divider line.
+     * Returns all messages so far (for showing in TextArea)
      */
-    public void showLine() {
-        System.out.println("____________________________________________________________");
+    public String getDialog() {
+        return dialog.toString();
     }
 }
