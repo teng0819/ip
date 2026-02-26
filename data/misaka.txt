@@ -5,3 +5,5 @@ D | 0 | project | 2026-02-20
 T | 0 | read book
 D | 0 | return book | 2019-10-15
 T | 0 | submit assignment
+T | 0 | borrow book
+E | 0 | project meeting | Mon 2pm | 4pm

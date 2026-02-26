@@ -55,7 +55,14 @@ public class Storage {
      * @throws DukeException If an error occurs while writing to the file
      */
     public void save(TaskList tasks) throws DukeException {
-        try (FileWriter fw = new FileWriter(filePath)) {
+        File file = new File(filePath);
+
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
+        try (FileWriter fw = new FileWriter(file)) {
             for (Task task : tasks.getTasks()) {
                 fw.write(task.toFileString() + "\n");
             }
