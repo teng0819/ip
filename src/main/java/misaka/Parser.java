@@ -74,6 +74,21 @@ public class Parser {
             return findTasks(tasks, keyword);
         }
 
+        if (input.startsWith("delete ")) {
+            try {
+                int index = Integer.parseInt(input.substring(7).trim()) - 1; // user sees 1-based indexing
+                assert index >= 0 && index < tasks.size() : "Index invalid for deletion";
+
+                Task removedTask = tasks.remove(index);
+                storage.save(tasks);
+
+                return "Noted. I've removed this task:\n  " + removedTask
+                        + "\nNow you have " + tasks.size() + " tasks in the list.";
+            } catch (NumberFormatException e) {
+                throw new DukeException("Please provide a valid task number to delete.");
+            }
+        }
+
         throw new DukeException("I don't understand this command.");
     }
 
