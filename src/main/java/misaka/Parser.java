@@ -89,6 +89,12 @@ public class Parser {
             }
         }
 
+        if (input.equals("sort")) {
+            tasks.sortByName();
+            storage.save(tasks);
+            return "Tasks sorted alphabetically!";
+        }
+
         throw new DukeException("I don't understand this command.");
     }
 

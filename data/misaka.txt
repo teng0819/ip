@@ -1,9 +1,8 @@
-E | 0 | meeting | Mon 2pm | 4pm
-T | 0 | read book
-T | 0 | read book
-E | 0 | meeting | 2pm | 4pm
-D | 0 | return book | 2019-10-15
-T | 0 | homework
-D | 0 | project | 2026-02-20
 T | 0 | borrow book from library
+T | 0 | homework
+E | 0 | meeting | 2pm | 4pm
+D | 0 | project | 2026-02-20
+T | 0 | read book
+T | 0 | read book
+D | 0 | return book | 2019-10-15
 T | 0 | submit assignment

@@ -1,6 +1,7 @@
 package misaka;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Represents a list of tasks and provides operations on them.
@@ -91,6 +92,10 @@ public class TaskList {
         }
 
         return result;
+    }
+
+    public void sortByName() {
+        tasks.sort(Comparator.comparing(Task::getDescription, String.CASE_INSENSITIVE_ORDER));
     }
 
 }
