@@ -82,7 +82,8 @@ public class TaskList {
      * @return the result found in the task
      */
     public ArrayList<Task> find(String keyword) {
-        assert keyword != null && !keyword.isEmpty() : "Keyword must not be empty";
+        assert keyword != null : "Keyword must not be null";
+        assert !keyword.isEmpty() : "User input must not be empty";
         ArrayList<Task> result = new ArrayList<>();
 
         for (Task task : tasks) {
