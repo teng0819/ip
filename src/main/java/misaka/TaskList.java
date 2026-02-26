@@ -94,8 +94,10 @@ public class TaskList {
         return result;
     }
 
+    /**
+     * sort the list of tasks based on alphabetical order
+     */
     public void sortByName() {
         tasks.sort(Comparator.comparing(Task::getDescription, String.CASE_INSENSITIVE_ORDER));
     }
-
 }
