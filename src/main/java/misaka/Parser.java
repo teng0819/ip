@@ -89,6 +89,34 @@ public class Parser {
             }
         }
 
+        if (input.startsWith("mark ")) {
+            try {
+                int index = Integer.parseInt(input.substring(5).trim()) - 1;
+
+                Task task = tasks.get(index);
+                task.mark();
+                storage.save(tasks);
+
+                return "Nice! I've marked this task as done:\n  " + task;
+            } catch (NumberFormatException e) {
+                throw new DukeException("Please provide a valid task number to mark.");
+            }
+        }
+
+        if (input.startsWith("unmark ")) {
+            try {
+                int index = Integer.parseInt(input.substring(7).trim()) - 1;
+
+                Task task = tasks.get(index);
+                task.unmark();
+                storage.save(tasks);
+
+                return "OK, I've marked this task as not done yet:\n  " + task;
+            } catch (NumberFormatException e) {
+                throw new DukeException("Please provide a valid task number to unmark.");
+            }
+        }
+
         if (input.equals("sort")) {
             tasks.sortByName();
             storage.save(tasks);

@@ -1,26 +1,79 @@
-# Misaka19090 project template
+# Misaka19090 Chatbot User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+![Chatbot UI](docs/Ui.png)
 
-## Setting up in Intellij
+## Overview
+Misaka19090 is a chatbot that interacts with users through a chat interface. 
+Users can input commands and messages, and the chatbot will respond.
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## How to Use
+1. **Launch the App**: Run `Main.java` to start the GUI.
+2. **Enter Messages**: Type your message in the text field and press `Enter` or click **Send**.
+3. **Chatbot Responses**: Misaka appears on the left, and your messages appear on the right.
+4. **Profile Pictures**: Both user and Misaka messages include profile images.
+5. **Features**:
+    - Add, delete, and list tasks.
+    - View tasks within deadlines.
+    - Sort tasks (if extension added).
+    - All features accessible through chat commands.
+6. **Scroll**: Chat window automatically scrolls when new messages arrive.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Misaka19090.java` file, right-click it, and choose `Run Misaka19090.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Details of Features
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+#### 1. todo
+Adds a task to the list 
+*   **Format** `todo <description>`
+
+---
+
+#### 2. deadline
+Adds a task which has a deadline to the list 
+*   **Format** `deadline <description> /by <yyyy>-<MM>-<dd> `
+
+---
+
+#### 3. event
+Adds a task which has a specific duration to the list 
+*   **Format** `event <description> /from <start> /to <end>`
+
+---
+
+#### 4. list
+Shows all the tasks in the list
+*   **Format** `list`
+
+---
+
+#### 5. find
+Shows all the tasks with the matching keyword
+*   **Format** `find <keyword>`
+
+---
+
+#### 6. delete
+Removes a certain task from the task list.
+*   **Format** `delete <index>`
+
+---
+
+#### 7. mark
+Marks a specific task as completed.
+*   **Format** `mark <index>`
+
+---
+
+#### 8. unmark
+Unmarks a completed task as uncompleted.
+*   **Format** `unmark <index>`
+
+---
+
+#### 9. sort
+Sorts all the tasks in the list based on alphabetical order.
+*   **Format** `sort`
+
+---
+
+## Notes
+- Ensure the JavaFX runtime is properly set up (Java 17 recommended).
+- Input is ignored if blank.
